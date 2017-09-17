@@ -30,7 +30,6 @@ public final class Gateway {
     private Channel channel;
     
     private Gateway() {
-    
     }
     
     public static void main(final String[] args) {
