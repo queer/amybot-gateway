@@ -98,6 +98,13 @@
             <version>4.2.1</version>
             <classifier>javadoc</classifier>
         </dependency>
+
+        <!-- org.json just to match with Discord clients -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20160810</version>
+        </dependency>
     </dependencies>
 
     <build>
