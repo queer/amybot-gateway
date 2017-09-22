@@ -13,7 +13,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.16</version>
+            <version>1.16.18</version>
         </dependency>
 
         <!-- Logging -->
@@ -56,23 +56,6 @@
             <version>4.11</version>
         </dependency>
 
-        <!-- JSON handling -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>2.8.9</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>2.8.9</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.8.9</version>
-        </dependency>
-
         <!-- Guava because useful -->
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -80,30 +63,30 @@
             <version>23.0</version>
         </dependency>
 
-        <!-- RMQ for communication -->
-        <dependency>
-            <groupId>com.rabbitmq</groupId>
-            <artifactId>amqp-client</artifactId>
-            <version>4.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.rabbitmq</groupId>
-            <artifactId>amqp-client</artifactId>
-            <version>4.2.1</version>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.rabbitmq</groupId>
-            <artifactId>amqp-client</artifactId>
-            <version>4.2.1</version>
-            <classifier>javadoc</classifier>
-        </dependency>
-
         <!-- org.json just to match with Discord clients -->
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20160810</version>
+        </dependency>
+
+        <!-- Redisson for distributed data structures -->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>3.5.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>3.5.3</version>
+            <classifier>sources</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>3.5.3</version>
+            <classifier>javadoc</classifier>
         </dependency>
     </dependencies>
 
