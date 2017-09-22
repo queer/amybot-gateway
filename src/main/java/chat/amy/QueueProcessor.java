@@ -27,7 +27,7 @@ public class QueueProcessor extends AbstractScheduledService {
         logger = LoggerFactory.getLogger("Gateway " + queue + " Processor " + idx);
         
         final Config config = new Config();
-        config.useSingleServer().setAddress(Optional.of(System.getenv("REDIS_HOST")).orElse("redis://redis:6379"))
+        config.useSingleServer().setAddress(Optional.ofNullable(System.getenv("REDIS_HOST")).orElse("redis://redis:6379"))
                 // Based on my bot heavily abusing redis as it is, high connection pool size is not a terrible idea.
                 // NOTE: Current live implementation uses like 500 connections in the pool, so TEST TEST TEST
                 // TODO: Determine better sizing
@@ -46,7 +46,7 @@ public class QueueProcessor extends AbstractScheduledService {
     
     @Override
     protected Scheduler scheduler() {
-        return Scheduler.newFixedDelaySchedule(0, Long.parseLong(Optional.of(System.getenv("POLL_DELAY")).orElse("50")),
+        return Scheduler.newFixedDelaySchedule(0, Long.parseLong(Optional.ofNullable(System.getenv("POLL_DELAY")).orElse("50")),
                 TimeUnit.MILLISECONDS);
     }
 }
