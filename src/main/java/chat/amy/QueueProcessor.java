@@ -46,6 +46,7 @@ public class QueueProcessor extends AbstractScheduledService {
     
     @Override
     protected Scheduler scheduler() {
-        return Scheduler.newFixedDelaySchedule(0, Long.parseLong(System.getenv("POLL_DELAY")), TimeUnit.MILLISECONDS);
+        return Scheduler.newFixedDelaySchedule(0, Long.parseLong(Optional.of(System.getenv("POLL_DELAY")).orElse("50")),
+                TimeUnit.MILLISECONDS);
     }
 }
