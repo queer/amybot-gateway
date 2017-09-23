@@ -28,6 +28,7 @@ public class QueueProcessor extends AbstractScheduledService {
         
         final Config config = new Config();
         config.useSingleServer().setAddress(Optional.ofNullable(System.getenv("REDIS_HOST")).orElse("redis://redis:6379"))
+                .setPassword(System.getenv("REDIS_PASS"))
                 // Based on my bot heavily abusing redis as it is, high connection pool size is not a terrible idea.
                 // NOTE: Current live implementation uses like 500 connections in the pool, so TEST TEST TEST
                 // TODO: Determine better sizing

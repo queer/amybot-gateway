@@ -10,4 +10,5 @@ Environment variables:
 REDIS_HOST="redis://redis:6379"
 # ms poll period
 POLL_DELAY="50"
+REDIS_PASS="your password here"
 ```
