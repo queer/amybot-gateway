@@ -1,6 +1,5 @@
 package chat.amy;
 
-import com.google.common.util.concurrent.AbstractScheduledService;
 import org.redisson.Redisson;
 import org.redisson.api.RBlockingQueue;
 import org.redisson.api.RedissonClient;
@@ -9,13 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author amy
  * @since 9/22/17.
  */
-public class QueueProcessor extends AbstractScheduledService {
+public class QueueProcessor implements Runnable {
     private final Gateway gateway;
     private final String queue;
     private final RedissonClient redis;
@@ -37,17 +35,15 @@ public class QueueProcessor extends AbstractScheduledService {
     }
     
     @Override
-    protected void runOneIteration() throws Exception {
-        logger.debug("Getting next event from " + queue + "...");
-        final RBlockingQueue<WrappedEvent> blockingQueue = redis.getBlockingQueue(queue);
-        final WrappedEvent event = blockingQueue.take();
-        // Any preprocessing or logging or etc. goes here
-        redis.getBlockingQueue(queue.replace("intake", "backend")).add(event);
-    }
-    
-    @Override
-    protected Scheduler scheduler() {
-        return Scheduler.newFixedDelaySchedule(0, Long.parseLong(Optional.ofNullable(System.getenv("POLL_DELAY")).orElse("50")),
-                TimeUnit.MILLISECONDS);
+    public void run() {
+        try {
+            logger.debug("Getting next event from " + queue + "...");
+            final RBlockingQueue<WrappedEvent> blockingQueue = redis.getBlockingQueue(queue);
+            final WrappedEvent event = blockingQueue.take();
+            // Do processing etc. here
+            redis.getBlockingQueue(queue.replace("intake", "backend")).add(event);
+        } catch(final InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

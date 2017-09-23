@@ -4,9 +4,6 @@ import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author amy
  * @since 9/17/17.
@@ -15,9 +12,6 @@ import java.util.List;
 public final class Gateway {
     @Getter
     private final Logger logger = LoggerFactory.getLogger("amybot-gateway");
-    
-    @Getter
-    private final List<QueueProcessor> processors = new ArrayList<>();
     
     private Gateway() {
     }
@@ -32,11 +26,7 @@ public final class Gateway {
     }
     
     private void connectQueues() {
-        logger.info("Preparing initial intake queue consumers...");
-        final int size = 4;
-        for(int i = 0; i < size; i++) {
-            processors.add(new QueueProcessor(this, "discord-intake", i + 1));
-        }
-        logger.info("Spawned " + size + " workers.");
+        final Thread intake = new Thread(new QueueProcessor(this, "discord-intake", 0));
+        intake.start();
     }
 }
