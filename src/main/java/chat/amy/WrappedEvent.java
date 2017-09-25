@@ -10,8 +10,6 @@ import org.json.JSONObject;
 @Value
 public class WrappedEvent {
     private final String source;
-    private final int shard;
-    private final int limit;
     private final String type;
     private final JSONObject data;
 }
