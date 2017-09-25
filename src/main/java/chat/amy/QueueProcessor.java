@@ -46,6 +46,7 @@ public class QueueProcessor implements Runnable {
                 final WrappedEvent event = future.await().getNow();
                 if(future.isDone()) {
                     logger.debug("Future was a success!");
+                    logger.debug("Cause: " + future.cause());
                 } else {
                     logger.debug("Somehow got the future without it being done!?");
                 }
