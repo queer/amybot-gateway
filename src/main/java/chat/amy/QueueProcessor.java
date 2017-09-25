@@ -2,6 +2,7 @@ package chat.amy;
 
 import org.redisson.Redisson;
 import org.redisson.api.RBlockingQueue;
+import org.redisson.api.RFuture;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 import org.slf4j.Logger;
@@ -41,7 +42,13 @@ public class QueueProcessor implements Runnable {
             try {
                 logger.debug("Getting next event from " + queue + "...");
                 final RBlockingQueue<WrappedEvent> blockingQueue = redis.getBlockingQueue(queue);
-                final WrappedEvent event = blockingQueue.take();
+                final RFuture<WrappedEvent> future = blockingQueue.takeAsync();
+                final WrappedEvent event = future.await().getNow();
+                if(future.isDone()) {
+                    logger.debug("Future was a success!");
+                } else {
+                    logger.debug("Somehow got the future without it being done!?");
+                }
                 // Do processing etc. here
                 logger.debug("Got next event: " + event);
                 if(Objects.nonNull(event)) {
