@@ -7,6 +7,7 @@ import org.redisson.config.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -36,15 +37,21 @@ public class QueueProcessor implements Runnable {
     
     @Override
     public void run() {
-        try {
-            logger.debug("Getting next event from " + queue + "...");
-            final RBlockingQueue<WrappedEvent> blockingQueue = redis.getBlockingQueue(queue);
-            final WrappedEvent event = blockingQueue.take();
-            // Do processing etc. here
-            logger.debug("Got next event: " + event);
-            redis.getBlockingQueue(queue.replace("intake", "backend")).add(event);
-        } catch(final InterruptedException e) {
-            e.printStackTrace();
+        while(true) {
+            try {
+                logger.debug("Getting next event from " + queue + "...");
+                final RBlockingQueue<WrappedEvent> blockingQueue = redis.getBlockingQueue(queue);
+                final WrappedEvent event = blockingQueue.take();
+                // Do processing etc. here
+                logger.debug("Got next event: " + event);
+                if(Objects.nonNull(event)) {
+                    redis.getBlockingQueue(queue.replace("intake", "backend")).add(event);
+                } else {
+                    logger.debug("Ignoring null queue event");
+                }
+            } catch(final InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
