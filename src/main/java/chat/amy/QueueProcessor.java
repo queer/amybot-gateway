@@ -41,6 +41,7 @@ public class QueueProcessor implements Runnable {
             final RBlockingQueue<WrappedEvent> blockingQueue = redis.getBlockingQueue(queue);
             final WrappedEvent event = blockingQueue.take();
             // Do processing etc. here
+            logger.debug("Got next event: " + event);
             redis.getBlockingQueue(queue.replace("intake", "backend")).add(event);
         } catch(final InterruptedException e) {
             e.printStackTrace();
