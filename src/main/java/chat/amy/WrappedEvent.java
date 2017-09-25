@@ -1,7 +1,7 @@
 package chat.amy;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Value;
-import org.json.JSONObject;
 
 /**
  * @author amy
@@ -11,5 +11,5 @@ import org.json.JSONObject;
 public class WrappedEvent {
     private final String source;
     private final String type;
-    private final JSONObject data;
+    private final JsonNode data;
 }
