@@ -1,5 +1,11 @@
 # Gateway
 
+## TODO List
+
+- Event filtering
+- Better event buffering (multi-queue?)
+- Shard (re)connect and ID management
+
 ## Notes
 
 - Queues are of the form `service-intake` and `service-backend`. This assumption is used to provide functionality.  
